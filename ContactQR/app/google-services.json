@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "474152965828",
+    "firebase_url": "https://contactqr.firebaseio.com",
+    "project_id": "contactqr",
+    "storage_bucket": "contactqr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:474152965828:android:a0863ef38e7dc7f1",
+        "android_client_info": {
+          "package_name": "com.example.contactqr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "474152965828-halbkf7ercv9pjug8n9hq7ql10pkk4u3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAO6dqMqrHhmEUi-zl-fWGAQTZUzpCRtPE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "474152965828-halbkf7ercv9pjug8n9hq7ql10pkk4u3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
