@@ -1,5 +1,6 @@
 package com.example.contactqr;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.content.Intent;
+import android.widget.ImageButton;
 
 public class ScanFragment extends Fragment {
 
@@ -18,7 +20,7 @@ public class ScanFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_scan, container, false);
 
-        Button btnOpen = (Button) view.findViewById(R.id.btnOpen);
+        ImageButton btnOpen = (ImageButton) view.findViewById(R.id.btnOpen);
         btnOpen.setOnClickListener(new View.OnClickListener() {
 
             @Override

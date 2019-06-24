@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_light">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Scan Fragment"
-        android:textSize="30sp"
-        android:layout_centerInParent="true" />
-
-    <Button
+    <ImageButton
         android:id="@+id/btnOpen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:background="@drawable/ic_remove_red_eye_black_24dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:onClick="onClick"/>
 
 </RelativeLayout>
