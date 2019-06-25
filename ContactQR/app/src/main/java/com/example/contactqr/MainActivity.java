@@ -17,10 +17,10 @@ public class MainActivity extends AppCompatActivity {
         // Initializes Bottom Nav
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-        bottomNav.setSelectedItemId(R.id.nav_code);
+        bottomNav.setSelectedItemId(R.id.nav_edit);
 
         // Starts a New Fragment When App is Loaded
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CodeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditFragment()).commit();
 
     }
 
@@ -37,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.nav_edit:
                         selectedFragment = new EditFragment();
-                        break;
-                    case R.id.nav_code:
-                        selectedFragment = new CodeFragment();
                         break;
                     case R.id.nav_scan:
                         selectedFragment = new ScanFragment();
