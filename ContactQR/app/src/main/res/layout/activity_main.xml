@@ -6,11 +6,17 @@
     android:layout_height="match_parent"
     tools:context="com.example.contactqr.MainActivity">
 
+    <!-- FrameLayout is the Portion of the Page that Changes when an
+         Item from the Bottom Navigation is clicked. -->
+
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_navigation" />
+
+    <!-- Bottom Navigation Holds the Menu Items.
+         The Items in bottom_navigation.xml are placed in the Bottom Navigation. -->
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"

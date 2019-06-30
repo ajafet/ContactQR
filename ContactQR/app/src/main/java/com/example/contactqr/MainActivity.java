@@ -14,39 +14,46 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initializes Bottom Nav
+        // Initializes Bottom Nav with a Listener to Handle Item Selection
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-        bottomNav.setSelectedItemId(R.id.nav_edit);
 
-        // Starts a New Fragment When App is Loaded
+        // Sets the First Selected Item of the Bottom Navigation to the Edit "Page" Starts a
+        // New Fragment When App is Loaded
+        bottomNav.setSelectedItemId(R.id.nav_edit);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditFragment()).commit();
 
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener;
+    /*
+    *  This function handles changing the fragment_container to the correct fragment page.
+    *  When an user clicks an item from the Bottom Navigation, the fragment_container is replaced
+    *  with the corresponding fragment.
+    */
 
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener;
     {
+
         navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                Fragment selectedFragment = null;
+            Fragment selectedFragment = null;
 
-                switch (item.getItemId()) {
+            switch (item.getItemId()) {
 
-                    case R.id.nav_edit:
-                        selectedFragment = new EditFragment();
-                        break;
-                    case R.id.nav_scan:
-                        selectedFragment = new ScanFragment();
-                        break;
+                case R.id.nav_edit:
+                    selectedFragment = new EditFragment();
+                    break;
+                case R.id.nav_scan:
+                    selectedFragment = new ScanFragment();
+                    break;
 
-                }
+            }
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
 
-                return true;
+            return true;
 
             }
         };

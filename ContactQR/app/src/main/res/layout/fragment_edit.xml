@@ -10,6 +10,9 @@
     android:paddingTop="16dp"
     tools:context="com.example.newpc.qrcode.GeneratorActivity">
 
+    <!-- Edit Page Just Holds a Clickable Layout with an Image.
+         The Image is Used to Show the QR Code. -->
+
     <LinearLayout
         android:id="@+id/edit_QR"
         android:layout_width="match_parent"

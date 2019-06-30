@@ -1,15 +1,8 @@
 package com.example.contactqr;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.ContextWrapper;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,119 +10,140 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import android.support.v4.app.Fragment;
-
-import android.app.AlertDialog;
-
-
 
 public class InputActivity extends AppCompatActivity {
 
     private static final String FILE_NAME = "info.txt";
+
+    // Declaring xml components.
     private EditText name;
     private EditText phone;
     private Button gen_btn;
     private ImageView image;
-    private String text2QR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
 
+        // Linking activity_input.xml components.
         name = (EditText) findViewById(R.id.name);
         phone = (EditText) findViewById(R.id.phone);
         gen_btn = (Button) findViewById(R.id.gen_btn);
         image = (ImageView) findViewById(R.id.image);
 
+        // Function Used to Load "info.txt" information to corresponding text fields.
         loadInfo();
 
-        //set listeners
+        // Text fields are given listeners to make sure no blank information is stored.
         name.addTextChangedListener(textWatcher);
         phone.addTextChangedListener(textWatcher);
 
-        // run once to disable if empty
-        checkFieldsForEmptyValues();
+        // Disable gen_btn button if "info.txt" information is blank.
+        checkFields ();
 
+        /*  When gen_btn() is pressed: information on text fields is saved to the device, activity
+        *   result is set to RESULT_OK, and the InputActivity is closed.
+        */
         gen_btn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
 
-                text2QR = name.getText().toString().trim() + ":" + phone.getText().toString().trim();
-                saveInfo();
+            // Called to save information to "info.txt" file.
+            saveInfo();
 
-                setResult(Activity.RESULT_OK);
+            // Sets activity to RESULT_OK causing Edit Fragment to reload.
+            setResult(Activity.RESULT_OK);
 
-                finish();
+            // Terminates Input Activity, returning to Edit Fragment.
+            finish();
 
             }
         });
 
     }
 
-    private TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3)
-        {
+    /*  TextWatcher is executed when the value of a text field is changed. When declared the
+    *   following three functions have to be initialized, but we only needed onTextChanged().
+    *   When text in name/phone is changed, onTextChanged() is called.
+    */
 
-        }
+    private TextWatcher textWatcher = new TextWatcher() {
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-            checkFieldsForEmptyValues();
+            checkFields ();
         }
 
         @Override
-        public void afterTextChanged(Editable editable) {
-        }
+        public void afterTextChanged(Editable editable) {}
+
     };
 
-    private void checkFieldsForEmptyValues(){
+    /*  checkFields() is executed when onTextChanged() is executed and at the start of Input
+    *   Activity. This function disables the gen_btn if both or either name/phone text fields
+    *   are empty.
+    */
 
-        Button b = (Button) findViewById(R.id.gen_btn);
-        String s1 = name.getText().toString();
-        String s2 = phone.getText().toString();
+    private void checkFields (){
 
-        if(s1.equals("") && s2.equals(""))
-        {
-            b.setEnabled(false);
+        // Gets values from activity_input.xml
+        Button submit = (Button) findViewById(R.id.gen_btn);
+        String n = name.getText().toString();
+        String p = phone.getText().toString();
+
+        // Disables button if either name/phone equal to blank or both
+        if(n.equals("") && p.equals("")) {
+            submit.setEnabled(false);
+        }
+        else if(!n.equals("") && p.equals("")) {
+            submit.setEnabled(false);
+        }
+        else if(!p.equals("") && n.equals("")) {
+            submit.setEnabled(false);
+        }
+        else {
+            submit.setEnabled(true);
         }
 
-        else if(!s1.equals("") && s2.equals("")){
-            b.setEnabled(false);
-        }
-
-        else if(!s2.equals("") && s1.equals(""))
-        {
-            b.setEnabled(false);
-        }
-
-        else
-        {
-            b.setEnabled(true);
-        }
     }
+
+    /*  saveInfo() is executed when gen_btn is pressed. This function saves the information in
+    *   name/phone text fields to the "info.txt" file. The information is saved as "name:phone", so
+    *   when we scan a QR Code we know how to handle the information to create a Contact.
+    */
 
     public void saveInfo () {
 
-        FileOutputStream fos = null;
+        // Creating Stream
+        FileOutputStream text_file = null;
 
         try {
 
-            fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
-            fos.write(text2QR.getBytes());
+            // Gathers data from name/phone text fields
+            String text2QR = name.getText().toString().trim() + ":" + phone.getText().toString().trim();
 
+            // Opening File
+            text_file = openFileOutput(FILE_NAME, MODE_PRIVATE);
+
+            // Writing txt2QR into file
+            text_file.write(text2QR.getBytes());
+
+            // Displays Message to user notifying data has been "Saved"
             Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
-            fos.close();
+
+            // Closing File
+            text_file.close();
 
         }catch (FileNotFoundException e) {
 
@@ -143,20 +157,33 @@ public class InputActivity extends AppCompatActivity {
 
     }
 
+    /*  loadInfo() is executed when InputActivity is created. This function reads information from
+    *   "info.txt" file and sets it to the corresponding name/phone text fields. Since the
+    *   information is stored as "name:phone", the information read in is split between ":".
+    */
+
     public void loadInfo () {
 
-        FileInputStream fis = null;
+        //Creating Stream
+        FileInputStream text_file = null;
 
         try {
 
-            fis = openFileInput(FILE_NAME);
-            InputStreamReader isr = new InputStreamReader(fis);
+            // Opening File
+            text_file = openFileInput(FILE_NAME);
+            InputStreamReader isr = new InputStreamReader(text_file);
             BufferedReader br = new BufferedReader(isr);
 
+            // Reads in Information and Stores in info
             String info = br.readLine();
+
+            // Info is split between ":"
             String [] split = info.split(":");
 
+            // split[0] value is placed in name text field
             name.setText(split[0]);
+
+            // split[1] value is placed in phone text field
             phone.setText(split[1]);
 
         }catch (FileNotFoundException e) {
@@ -169,11 +196,13 @@ public class InputActivity extends AppCompatActivity {
 
         }finally {
 
-            if (fis != null) {
+            // Closes the text_file stream
+
+            if (text_file != null) {
 
                 try{
 
-                    fis.close();
+                    text_file.close();
 
                 }catch (IOException e) {
 
