@@ -25,7 +25,6 @@ public class InputActivity extends AppCompatActivity {
     private EditText name;
     private EditText phone;
     private Button gen_btn;
-    private ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,6 @@ public class InputActivity extends AppCompatActivity {
         name = (EditText) findViewById(R.id.name);
         phone = (EditText) findViewById(R.id.phone);
         gen_btn = (Button) findViewById(R.id.gen_btn);
-        image = (ImageView) findViewById(R.id.image);
 
         // Function Used to Load "info.txt" information to corresponding text fields.
         loadInfo();

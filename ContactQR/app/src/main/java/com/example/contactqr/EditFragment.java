@@ -150,31 +150,20 @@ public class EditFragment extends Fragment {
             return br.readLine();
 
         }catch (FileNotFoundException e) {
-
             return null;
-
         }catch (IOException e) {
-
             return null;
-
         }finally {
 
             // Closes the text_file stream
-
             if (text_file != null) {
 
                 try{
-
                     text_file.close();
-
                 }catch (IOException e) {
-
                     return null;
-
                 }
-
             }
-
         }
 
     }
